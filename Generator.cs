@@ -9,6 +9,6 @@ public class Generator
     {
         _config = config;
         _grid = new DungeonGrid(config.Width, config.Height, config.PathWidth);
-        _grid.PrintGrid();
+        _grid.SaveGrid();
     }
 }
