@@ -4,6 +4,7 @@ namespace DungeonGenerator.Configuration;
 
 public class DungeonGrid
 {
+    private const int border = 10;
     private readonly bool[,] _grid;
     private readonly int _height;
     private readonly int _pathWidth;
@@ -22,7 +23,7 @@ public class DungeonGrid
         for (var y = 0; y < height; y++)
             _grid[x, y] = true;
 
-        generateGrid();
+        GenerateGrid();
     }
 
     private void UpdateMin(int x, int y)
@@ -33,7 +34,7 @@ public class DungeonGrid
         if (y > _yMax) _yMax = y;
     }
 
-    private void generateGrid()
+    private void GenerateGrid()
     {
         var rand = new Random();
         var currentAngle = 2 * Math.PI * rand.NextDouble();
@@ -77,18 +78,23 @@ public class DungeonGrid
         _grid[x, y] = false;
     }
 
-    public void SaveGrid()
+    public void SaveGrid(MagickImage image)
     {
-        const int border = 10;
         byte[] white = { 0xFF, 0XFF, 0xFF };
-        var realWidth = border + _xMax - _xMin;
-        var realHeight = border + _yMax - _yMin;
 
-        using var image = new MagickImage(new MagickColor("#000000"), realWidth, realHeight);
         for (var y = _yMin; y < _yMax; y++)
         for (var x = _xMin; x < _xMax; x++)
             if (!_grid[x, y])
-                image.GetPixels().SetPixel(x + border / 2 - _xMin, y + border / 2 -_yMin, white);
-        image.Write("output.png");
+                image.GetPixels().SetPixel(x + border / 2 - _xMin, y + border / 2 - _yMin, white);
+    }
+
+    public int RealWidth()
+    {
+        return border + _xMax - _xMin;
+    }
+
+    public int RealHeight()
+    {
+        return border + _yMax - _yMin;
     }
 }

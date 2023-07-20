@@ -1,14 +1,19 @@
+using ImageMagick;
+
 namespace DungeonGenerator.Configuration;
 
 public class Generator
 {
-    private Config _config;
     private readonly DungeonGrid _grid;
+    private Config _config;
 
     public Generator(Config config)
     {
         _config = config;
         _grid = new DungeonGrid(config.Width, config.Height, config.PathWidth);
-        _grid.SaveGrid();
+
+        using var image = new MagickImage(new MagickColor("#000000"), _grid.RealWidth(), _grid.RealHeight());
+        _grid.SaveGrid(image);
+        image.Write("output.png");
     }
 }
