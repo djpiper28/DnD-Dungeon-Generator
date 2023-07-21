@@ -62,8 +62,8 @@ public class DungeonGrid
     {
         for (var i = -_pathWidth / 2.0; i < _pathWidth / 2.0; i++)
         {
-            var newx = (int)Math.Round(x + i * Math.Cos(rotation));
-            var newy = (int)Math.Round(y + i * Math.Sin(rotation));
+            var newx = (int)(x + i * Math.Cos(rotation));
+            var newy = (int)(y + i * Math.Sin(rotation));
             ClearPixel(newx, newy);
         }
     }
@@ -80,11 +80,12 @@ public class DungeonGrid
     public void SaveGrid(MagickImage image)
     {
         byte[] white = { 0xFF, 0XFF, 0xFF };
+        var pixels = image.GetPixels();
 
         for (var y = _yMin; y < _yMax; y++)
         for (var x = _xMin; x < _xMax; x++)
             if (!_grid[x, y])
-                image.GetPixels().SetPixel(x + border / 2 - _xMin, y + border / 2 - _yMin, white);
+                pixels.SetPixel(x + border / 2 - _xMin, y + border / 2 - _yMin, white);
     }
 
     public int RealWidth()
