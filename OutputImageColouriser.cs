@@ -52,7 +52,7 @@ public class OutputImageColouriser
     private void FillPath(int x, int y)
     {
         var luminance = Math.Log(Math.E, 5 + _wallDistanceMap[x, y]) * 3;
-        byte[] c = {10 * 255 / 100, 24 * 255 / 100, (byte)(255 * double.Min(1, 55 * luminance / 100.0))};
+        byte[] c = {10 * 255 / 100, 60 * 255 / 100, (byte)(255 * double.Min(1, 55 * luminance / 100.0))};
         _image.GetPixels().SetPixel(x, y, c);
     }
 
