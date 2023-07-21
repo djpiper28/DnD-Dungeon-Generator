@@ -49,8 +49,7 @@ public class DungeonGrid
 
         while (x > 0 && y > 0 && x < _width && y < _height)
         {
-            // Clear the tangent to the current angle of travel
-            ClearPath(x, y, 1 / currentAngle);
+            ClearPath(x, y, currentAngle + Math.PI / 2.0);
 
             currentAngle += maxAngleChange * rand.NextDouble() - 0.5;
             x += step * Math.Cos(currentAngle);
